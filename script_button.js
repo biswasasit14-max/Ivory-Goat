@@ -12,9 +12,5 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.style.backgroundColor = ""; // reset
   });
 
-  btn.addEventListener("click", () => {
-    if (btn.disabled) {
-      alert("You must enter the correct passkey first!");
-    }
-  });
 });
+
