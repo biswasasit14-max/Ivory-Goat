@@ -1,17 +1,19 @@
 <?php
 // checkPasskey.php
+session_start();
 
-// Define your secret passkey here (server-side, hidden from JS)
 $correctPasskey = "OPEN";
+$userPasskey = $_POST["passkey"] ?? "";
 
-// Get passkey from POST request
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $userPasskey = $_POST["passkey"] ?? "";
-
-    if ($userPasskey === $correctPasskey) {
-        echo "success";
-    } else {
-        echo "fail";
-    }
+if ($userPasskey === $correctPasskey) {
+    echo "success";
+} elseif (isset($_SESSION['tempPasskey'], $_SESSION['tempExpiry']) &&
+          $userPasskey === $_SESSION['tempPasskey'] &&
+          time() < $_SESSION['tempExpiry']) {
+    echo "success";
+} else {
+    echo "fail";
 }
 ?>
+
+
