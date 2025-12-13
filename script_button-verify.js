@@ -1,8 +1,11 @@
-// script_button.js
-
 function checkPasskey() {
   const keyInput = document.getElementById("passkeyInput");
+  const captchaBox = document.getElementById("captchaBox");
+  const openButton = document.getElementById("myButton");
   const key = keyInput.value.trim();
+
+  // Reset glow classes
+  captchaBox.classList.remove("glow-success", "glow-error", "shake");
 
   fetch("checkPasskey.php", {
     method: "POST",
@@ -12,34 +15,30 @@ function checkPasskey() {
     .then(res => res.text())
     .then(data => {
       if (data === "success") {
-        document.getElementById("myButton").disabled = false;
+        // Enable button + green glow
+        openButton.disabled = false;
+        captchaBox.classList.add("glow-success");
       } else {
-
-        // Trigger shake animation
-        keyInput.classList.add("shake");
-        setTimeout(() => keyInput.classList.remove("shake"), 400);
+        // Disable button + red glow + shake
+        openButton.disabled = true;
+        captchaBox.classList.add("glow-error", "shake");
+        setTimeout(() => captchaBox.classList.remove("shake"), 400);
       }
     })
     .catch(err => console.error("Error:", err));
 }
 
-// ------------------------------
-// Optional: Hover/click effects for the Open Link button
-// ------------------------------
+// Attach event listener to button
 document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.getElementById("myButton");
+  document.getElementById("passkeyBtn").addEventListener("click", checkPasskey);
 
+  const btn = document.getElementById("myButton");
   btn.addEventListener("mouseover", () => {
     if (!btn.disabled) {
-      btn.style.backgroundColor = "#4CAF50"; // green highlight
+      btn.style.backgroundColor = "#4CAF50";
     }
   });
-
   btn.addEventListener("mouseout", () => {
-    btn.style.backgroundColor = ""; // reset
+    btn.style.backgroundColor = "";
   });
-
 });
-
-
-
