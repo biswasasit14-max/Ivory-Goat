@@ -1,10 +1,12 @@
+// script_button.js
+
 function checkPasskey() {
   const keyInput = document.getElementById("passkeyInput");
   const captchaBox = document.getElementById("captchaBox");
   const openButton = document.getElementById("myButton");
   const key = keyInput.value.trim();
 
-  // Reset glow classes
+  // Reset classes before each check
   captchaBox.classList.remove("glow-success", "glow-error", "shake");
 
   fetch("checkPasskey.php", {
@@ -22,24 +24,15 @@ function checkPasskey() {
         // Disable button + red glow + shake
         openButton.disabled = true;
         captchaBox.classList.add("glow-error", "shake");
+
+        // Remove shake class after animation ends
         setTimeout(() => captchaBox.classList.remove("shake"), 400);
       }
     })
     .catch(err => console.error("Error:", err));
 }
 
-// Attach event listener to button
+// Attach event listener to "Use Passkey" button
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("passkeyBtn").addEventListener("click", checkPasskey);
-
-  const btn = document.getElementById("myButton");
-  btn.addEventListener("mouseover", () => {
-    if (!btn.disabled) {
-      btn.style.backgroundColor = "#4CAF50";
-    }
-  });
-  btn.addEventListener("mouseout", () => {
-    btn.style.backgroundColor = "";
-  });
 });
-
