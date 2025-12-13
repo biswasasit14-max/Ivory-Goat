@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Authentication Portal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <style>
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
@@ -101,7 +100,9 @@
       box-shadow: 0 -2px 4px rgba(0,0,0,0.2);
     }
     footer p { margin: 0; }
-  </style>
+</style>
+
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>Authentication Portal</h1>
@@ -109,7 +110,9 @@
   <div class="captchaBox" id="captchaBox">
     <input type="password" id="passkeyInput" placeholder="Enter Passkey">
     <button class="btn" id="passkeyBtn">Use Passkey</button>
-    <button class="btn" id="myButton" type="button" disabled onclick="window.location.href='Directory.html';">
+
+    <!-- Open Link button starts disabled -->
+    <button class="btn" id="myButton" type="button" disabled>
       Open Link
     </button>
   </div>
@@ -118,8 +121,7 @@
     <p>© 2025 Made by The Rope Garage Co. All rights reserved.</p>
   </footer>
 
-  <!-- External JS -->
-  <script src="script_button.js"></script>
-  <script src="script_button-verify.js"></script>
+  <!-- Only one JS file now -->
+  <script src="script.js"></script>
 </body>
 </html>
