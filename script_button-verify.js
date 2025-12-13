@@ -13,9 +13,7 @@ function checkPasskey() {
     .then(data => {
       if (data === "success") {
         document.getElementById("myButton").disabled = false;
-        alert("Password accepted! The link is now enabled.");
       } else {
-        alert("Invalid password Access denied.");
 
         // Trigger shake animation
         keyInput.classList.add("shake");
@@ -47,4 +45,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
 
