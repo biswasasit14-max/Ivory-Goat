@@ -39,5 +39,5 @@ It demonstrates secure server-side logic, dynamic client-side interactions, and 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/your-repo.git
-   cd your-repo
+   git clone https://github.com/ybiswasasit14-max/Ivory-Goat.git
+   cd Ivory-Goat
