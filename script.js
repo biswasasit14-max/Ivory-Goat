@@ -53,3 +53,10 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.style.backgroundColor = "";
   });
 });
+
+// Inside document.addEventListener("DOMContentLoaded", ...)
+document.getElementById("passkeyInput").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    checkPasskey();
+  }
+});
