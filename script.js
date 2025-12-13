@@ -23,7 +23,7 @@ function checkPasskey() {
 
         // Add click handler to open Directory.html
         openButton.onclick = () => {
-          window.location.href = "Directory.html";
+          window.location.href = "Home.html";
         };
       } else {
         // Disable button + red glow + shake
