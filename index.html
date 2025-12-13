@@ -143,11 +143,22 @@
   <h1>Authentication Portal</h1>
 
   <div class="captchaBox" id="captchaBox">
-    <!-- Input with lock icon -->
-    <div class="input-group">
-      <i class="fas fa-lock"></i>
-      <input type="password" id="passkeyInput" placeholder="Enter Passkey">
-    </div>
+  <div class="input-group">
+    <i class="fas fa-lock"></i>
+    <input type="password" id="passkeyInput" placeholder="Enter Passkey">
+  </div>
+
+  <button class="btn" id="passkeyBtn"><i class="fas fa-key"></i> Use Passkey</button>
+  <button class="btn" id="myButton" type="button" disabled>
+    <i class="fas fa-link"></i> Open Link
+  </button>
+
+  <!-- New Forgot Passkey button -->
+  <button class="btn" id="forgotBtn" type="button">
+    <i class="fas fa-question-circle"></i> Forgot Passkey
+  </button>
+</div>
+
 
     <button class="btn" id="passkeyBtn"><i class="fas fa-key"></i> Use Passkey</button>
 
@@ -165,3 +176,4 @@
   <script src="script.js"></script>
 </body>
 </html>
+
