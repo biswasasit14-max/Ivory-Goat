@@ -16,62 +16,114 @@
       height: 100%;
     }
 
+    /* Define a custom property for angle */
+    @property --angle {
+      syntax: "<angle>";
+      inherits: false;
+      initial-value: 0deg;
+    }
+
     /* Directory panel */
     .directory {
       width: 25%;
-      background: linear-gradient(180deg, #f0f0f0, #dcdcdc);
+      background: linear-gradient(180deg, #f7f7f7, #e0e0e0);
       border-right: 2px solid #bbb;
       padding: 15px;
       box-sizing: border-box;
-      overflow-y: auto; /* scroll if too many links */
-    }
-    .directory h2 {
-      text-align: center;
-      margin: 0 0 15px;
-      font-size: 1.3em;
-      color: #333;
-      border-bottom: 1px solid #aaa;
-      padding-bottom: 8px;
-    }
-    .directory a {
-      display: block;
-      padding: 10px;
-      margin: 6px 0;
-      text-decoration: none;
-      color: #222;
-      background-color: #e6e6e6;
-      border-radius: 6px;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      font-weight: 500;
-    }
-    .directory a:hover {
-      background-color: #bfbfbf;
-      transform: translateX(4px);
+      overflow-y: auto;
+      box-shadow: inset -2px 0 6px rgba(0,0,0,0.1);
     }
 
-    /* Content frame */
+    /* Header card with animated blurred tail */
+    .directory h2 {
+      position: relative;
+      text-align: center;
+      margin: 0 0 20px;
+      font-size: 1.4em;
+      color: #2e7d32;
+      font-weight: bold;
+      letter-spacing: 1px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      z-index: 1;
+      overflow: hidden; /* ensures tail doesn’t spill outside */
+    }
+
+    .directory h2::before {
+      content: "";
+      position: absolute;
+      inset: -20px; /* extend beyond card edges */
+      border-radius: 50%;
+      background: conic-gradient(
+        from var(--angle),
+        rgba(76,175,80,1) 0deg 15deg,
+        rgba(76,175,80,0.3) 15deg 40deg,
+        transparent 40deg 360deg
+      );
+      filter: blur(12px); /* smooth faded tail */
+      z-index: -1;        /* only head visible behind card */
+      animation: spin 6s linear infinite;
+    }
+
+    @keyframes spin {
+      to { --angle: 360deg; }
+    }
+
+    .directory a {
+      display: block;
+      padding: 12px;
+      margin: 8px 0;
+      text-decoration: none;
+      color: #333;
+      background-color: #f0f0f0;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    }
+    .directory a:hover {
+      background-color: #4CAF50;
+      color: #fff;
+      transform: translateX(6px);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    }
+    .directory a.active {
+      background-color: #4CAF50;
+      color: #fff;
+      transform: translateX(6px);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    }
+
     .content {
-      flex: 1;              /* take all remaining space */
+      flex: 1;
       border: none;
-      height: 100%;         /* full height */
-      width: 100%;          /* full width */
+      height: 100%;
+      width: 100%;
       background-color: #fff;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Directory iframe -->
     <div class="directory">
       <h2>Directory</h2>
-      <!-- Links target the content iframe -->
-      <a href="Home.html" target="contentFrame">Home</a>
-      <a href="About Us.html" target="contentFrame">About Us</a>
-      <a href="Departments.html" target="contentFrame">Departments</a>
+      <a href="Home.html" target="contentFrame">🏠 Home</a>
+      <a href="About Us.html" target="contentFrame">ℹ️ About Us</a>
+      <a href="Departments.html" target="contentFrame">📚 Departments</a>
     </div>
-
-    <!-- Content iframe -->
     <iframe name="contentFrame" class="content" src="Home.html"></iframe>
   </div>
+
+  <script>
+    const links = document.querySelectorAll('.directory a');
+    links.forEach(link => {
+      link.addEventListener('click', function() {
+        links.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
 </body>
 </html>
