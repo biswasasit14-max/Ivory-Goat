@@ -21,7 +21,7 @@ function checkPasskey() {
         openButton.disabled = false;
         captchaBox.classList.add("glow-success");
 
-        // Add click handler to open Directory.html
+        // Add click handler to open Home.html
         openButton.onclick = () => {
           window.location.href = "Home.html";
         };
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Inside document.addEventListener("DOMContentLoaded", ...)
+// Allow pressing Enter to trigger check
 document.getElementById("passkeyInput").addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
     checkPasskey();
