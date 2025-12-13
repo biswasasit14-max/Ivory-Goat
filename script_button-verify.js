@@ -1,13 +1,15 @@
+// script_button-verify.js
+
 document.addEventListener("DOMContentLoaded", () => {
   const btn = document.getElementById("myButton");
 
   btn.addEventListener("mouseover", () => {
     if (!btn.disabled) {
-      btn.style.backgroundColor = "#4CAF50";
+      btn.style.backgroundColor = "#4CAF50"; // green highlight
     }
   });
 
   btn.addEventListener("mouseout", () => {
-    btn.style.backgroundColor = "";
+    btn.style.backgroundColor = ""; // reset
   });
 });
