@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Authentication Portal</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style>
+        body {
+          font-family: Arial, Helvetica, sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color: grey;
+          color: black;
+          text-align: center;
+        }
+
+        /* Main heading */
+        h1 {
+          background-color: black;
+          color: grey;
+          padding: 20px;
+          margin: 0;
+          font-size: 2em;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+          font-family: Helvetica, sans-serif;
+          letter-spacing: 1px;
+        }
+
+        /* Captcha / passkey box */
+        .captchaBox {
+          margin: 30px auto;
+          padding: 20px;
+          width: 360px;
+          background: #eee;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        #captchaText {
+          font-weight: bold;
+          font-size: 1.1em;
+          margin-bottom: 10px;
+        }
+
+        #captchaInput, #passkeyInput {
+          padding: 10px;
+          width: 100%;
+          border-radius: 6px;
+          border: 1px solid #aaa;
+          margin-top: 10px;
+          font-size: 1em;
+          transition: border-color 0.3s ease;
+        }
+
+        #captchaInput:focus, #passkeyInput:focus {
+          border-color: #000;
+          outline: none;
+        }
+
+        /* Buttons */
+        .btn {
+          margin-top: 12px;
+          padding: 10px 18px;
+          background: darkgrey;
+          color: white;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 1em;
+          transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn:hover {
+          background: #000;
+          transform: scale(1.05);
+        }
+
+        .btn:active {
+          background-color: #3e3e3e;
+          transform: scale(0.95);
+        }
+
+        /* Paragraphs */
+        p {
+          font-size: 1.1em;
+          margin: 20px;
+          line-height: 1.5;
+        }
+
+        p.a {
+          font-family: Monospace;
+          text-align: center;
+          font-size: 0.95em;
+          color: #222;
+        }
+
+        /* Footer */
+        footer {
+          background-color: #1f1f1f;
+          color: #aaa;
+          padding: 15px;
+          position: fixed;
+          bottom: 0;
+          width: 100%;
+          font-size: 0.9em;
+          box-shadow: 0 -2px 6px rgba(0,0,0,0.6);
+        }
+
+        footer p {
+          margin: 0;
+        }
+
+        /* Divider line */
+        .divider {
+          margin: 15px 0;
+          border-top: 1px solid #ccc;
+        }
+
+        /* Typing animation for headings (optional) */
+        h2, h3 {
+          font-family: Helvetica;
+          color: darkgrey;
+          background-color: white;
+          display: inline-block;
+          overflow: hidden;
+          white-space: nowrap;
+          border-right: 2px solid darkgrey;
+          animation: typing 4s steps(20, end), blink 0.7s step-end infinite;
+          padding: 0.5rem 1rem;
+        }
+
+        @keyframes typing {
+          from { width: 0 }
+          to { width: 100% }
+        }
+
+        @keyframes blink {
+          from, to { border-color: transparent }
+          50% { border-color: darkgrey }
+        }
+    </style>
+</head>
+<body>
+    <h1><b><i>Auth Portal</i></b></h1>
+
+    <div class="captchaBox">
+      <!-- Passkey input -->
+      <input type="password" id="passkeyInput" placeholder="Enter Passkey">
+      <button class="btn" id="passkeyBtn" onclick="checkPasskey()"><i>Use Passkey</i></button>
+      
+      <!-- Open Link button (disabled until passkey is correct) -->
+      <button class="btn" id="myButton" type="button" disabled onclick="window.location.href='nein.html';">
+        <i>Open Link</i>
+      </button>
+
+      <p class="a">
+        Passkey is "OPEN" for those who don't know.  
+        (Extra content will be added if requests exceed 500 views.)
+      </p>
+    </div>
+
+    <footer>
+      <p>© 2025 Made by The Rope Garage. Co. All rights reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script_nein.js"></script>
+    <script src="script_ver_nein.js"></script>
+</body>
+</html>

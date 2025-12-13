@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Directory</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+    }
+    .container {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Directory panel */
+    .directory {
+      width: 25%;
+      background: linear-gradient(180deg, #f0f0f0, #dcdcdc);
+      border-right: 2px solid #bbb;
+      padding: 15px;
+      box-sizing: border-box;
+      overflow-y: auto; /* scroll if too many links */
+    }
+    .directory h2 {
+      text-align: center;
+      margin: 0 0 15px;
+      font-size: 1.3em;
+      color: #333;
+      border-bottom: 1px solid #aaa;
+      padding-bottom: 8px;
+    }
+    .directory a {
+      display: block;
+      padding: 10px;
+      margin: 6px 0;
+      text-decoration: none;
+      color: #222;
+      background-color: #e6e6e6;
+      border-radius: 6px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      font-weight: 500;
+    }
+    .directory a:hover {
+      background-color: #bfbfbf;
+      transform: translateX(4px);
+    }
+
+    /* Content frame */
+    .content {
+      flex: 1;              /* take all remaining space */
+      border: none;
+      height: 100%;         /* full height */
+      width: 100%;          /* full width */
+      background-color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Directory iframe -->
+    <div class="directory">
+      <h2>Directory</h2>
+      <!-- Links target the content iframe -->
+      <a href="Home.html" target="contentFrame">Home</a>
+      <a href="About Us.html" target="contentFrame">About Us</a>
+      <a href="Departments.html" target="contentFrame">Departments</a>
+    </div>
+
+    <!-- Content iframe -->
+    <iframe name="contentFrame" class="content" src="Home.html"></iframe>
+  </div>
+</body>
+</html>
