@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Authentication Portal</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Internal CSS -->
+    <style>
+    /* Shake animation for wrong passkey */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.4s;
+  border: 2px solid red; /* optional red border flash */
+}
+
+    
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            text-align: center;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* Header */
+        h1 {
+            font-family: monospace;
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            margin: 0;
+            font-size: 2em;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            border-bottom: 3px solid #45a049;
+        }
+
+        /* Captcha/Passkey Box */
+        .captchaBox {
+            margin: 30px auto;
+            padding: 20px;
+            width: 360px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        #captchaInput, #passkeyInput {
+            padding: 10px;
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid #aaa;
+            margin-top: 8px;
+            transition: border-color 0.3s ease;
+        }
+
+        #captchaInput:focus, #passkeyInput:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        /* Buttons */
+        .btn {
+            margin-top: 12px;
+            padding: 10px 18px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+
+        .btn:active {
+            background: #3e8e41;
+            transform: scale(0.98);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #222;
+            color: #ccc;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 0.9em;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.2);
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Dark mode */
+        body.dark-mode {
+            background-color: #1f1f1f;
+            color: #ddd;
+        }
+
+        body.dark-mode h1 {
+            background-color: #1f1f1f;
+            color: #4CAF50;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+        }
+
+        body.dark-mode .captchaBox {
+            background: #2a2a2a;
+            color: #ddd;
+        }
+
+        body.dark-mode footer {
+            background-color: #111;
+            color: #aaa;
+        }
+
+        /* Toggle button */
+        #toggleMode {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #333;
+            color: #fff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+        }
+
+        #toggleMode:hover {
+            background: #555;
+        }
+        
+        h2, h3 {
+        font-family: Helvetica;       
+        color: darkgrey;                  
+        background-color: white;       
+        display: inline-block;
+        overflow: hidden;             /* hide text until revealed */
+        white-space: nowrap;          /* keep text on one line */
+        border-right: 2px solid ; /* cursor effect */
+        animation: typing 4s steps(20, end), blink 0.7s step-end infinite;
+        padding: 0.5rem 1rem;
+        }
+    </style>
+</head>
+<body>
+    <h1> Authentication Portal: </h1>
+    
+    <!-- Dark Mode Toggle -->
+    <button id="toggleMode">Toggle Dark Mode</button>
+
+    <div class="captchaBox">
+        <!-- Passkey input -->
+        <input type="password" id="passkeyInput" placeholder="Enter Passkey">
+        <button class="btn" id="passkeyBtn" onclick="checkPasskey()">Use Passkey</button>
+        
+        <!-- Open Link button (disabled until passkey is correct) -->
+        <button class="btn" id="myButton" type="button" disabled onclick="window.location.href='Directory.html';">
+            Open Link
+        </button>
+    </div>
+    
+    <footer>
+        <p>© 2025 Made by The Rope Garage. Co. All rights reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script_button.js"></script>
+    <script src="script_button-verify.js"></script>
+    <script>
+        // Dark Mode Toggle Script
+        document.getElementById("toggleMode").addEventListener("click", function() {
+            document.body.classList.toggle("dark-mode");
+        });
+    </script>
+</body>
+</html>
