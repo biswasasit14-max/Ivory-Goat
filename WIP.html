@@ -1,72 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Work in Progress</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work in Progress</title>
+<style>
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f9f9f9;
-      color: #333;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-    }
-
-    .wip-container {
-      background: #fff;
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      max-width: 500px;
+        font-family: Arial, sans-serif;
+        background: #0d1117;
+        color: #fff;
+        text-align: center;
+        padding: 50px;
     }
 
     h1 {
-      color: #4CAF50;
-      margin-bottom: 20px;
+        font-size: 2em;
+        margin-bottom: 20px;
     }
 
-    p {
-      font-size: 1.1em;
-      margin-bottom: 20px;
+    .progress-container {
+        width: 80%;
+        max-width: 500px;
+        height: 40px;
+        background: #222;
+        border-radius: 25px;
+        overflow: hidden;
+        margin: 0 auto;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
 
-    .spinner {
-      border: 6px solid #f3f3f3;
-      border-top: 6px solid #4CAF50;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-      margin: 0 auto;
+    .progress-bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(
+            120deg,
+            rgba(0, 200, 255, 0.8) 25%,
+            rgba(0, 150, 255, 0.9) 50%,
+            rgba(0, 200, 255, 0.8) 75%
+        );
+        background-size: 200% 100%;
+        animation: flow 2s linear infinite, fillUp 5s ease-in-out forwards;
     }
 
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    /* Fluid flowing animation */
+    @keyframes flow {
+        0% { background-position: 0% 0; }
+        100% { background-position: 200% 0; }
     }
 
-    footer {
-      margin-top: 30px;
-      font-size: 0.9em;
-      color: #777;
+    /* Smooth fill animation to a set percentage */
+    @keyframes fillUp {
+        0% { width: 0%; }
+        100% { width: 65%; } /* Change this to your desired percentage */
     }
-  </style>
+
+    .percentage {
+        margin-top: 15px;
+        font-size: 1.2em;
+        color: #00c8ff;
+    }
+</style>
 </head>
 <body>
-  <div class="wip-container">
+
     <h1>🚧 Work in Progress 🚧</h1>
-    <p>This page is currently under construction. Please check back later.</p>
-    <div class="spinner"></div>
-    <footer>
-      <p>© 2022 The SNR project</p>
-    </footer>
-  </div>
+    <div class="progress-container">
+        <div class="progress-bar"></div>
+    </div>
+    <div class="percentage">65% Complete</div>
+
 </body>
 </html>
