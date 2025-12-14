@@ -1,6 +1,6 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $secretKey = "YOUR_SECRET_KEY"; // from Google reCAPTCHA admin console
+    $secretKey = "6LepPCssAAAAAOva1Z7rDusuZfsV4v9I7XE5L0ih"; // from Google reCAPTCHA admin console
     $captchaResponse = $_POST['g-recaptcha-response'];
 
     // Verify with Google
