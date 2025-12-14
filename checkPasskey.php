@@ -11,6 +11,3 @@ if ($userPasskey === $correctPasskey) {
     echo "fail";
 }
 ?>
-
-
-
