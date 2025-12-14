@@ -32,3 +32,22 @@ function checkPasskey() {
     })
     .catch(err => console.error("Error:", err));
 }
+
+// Attach event listeners
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("passkeyBtn").addEventListener("click", checkPasskey);
+
+    const btn = document.getElementById("myButton");
+    btn.addEventListener("mouseover", () => {
+        if (!btn.disabled) btn.style.backgroundColor = "#4CAF50";
+    });
+    btn.addEventListener("mouseout", () => {
+        btn.style.backgroundColor = "";
+    });
+
+    document.getElementById("passkeyInput").addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+            checkPasskey();
+        }
+    });
+});
