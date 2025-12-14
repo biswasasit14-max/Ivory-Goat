@@ -68,50 +68,6 @@
       background: linear-gradient(135deg, #34d399, #059669);
       transform: translateY(-2px);
     }
-
-    .result-box {
-  margin-top: 20px;
-  font-size: 18px;
-  font-weight: bold;
-  color: #065f46;
-  text-align: center;
-  opacity: 0; /* hidden initially */
-}
-
-/* Slide-up animation */
-@keyframes slideUp {
-  from {
-    transform: translateY(30px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.show-result {
-  animation: slideUp 0.6s ease forwards;
-  opacity: 1; /* ensure it's visible after animation */
-}
-
-
-    .copy-btn {
-      margin-top: 12px;
-      padding: 8px 14px;
-      background: #86efac; /* light green */
-      color: #065f46;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background 0.3s ease, transform 0.2s ease;
-    }
-
-    .copy-btn:hover {
-      background: #4ade80; /* brighter green */
-      transform: scale(1.05);
-    }
   </style>
 </head>
 <body>
@@ -129,11 +85,24 @@
 
       <button type="submit">Submit</button>
     </form>
-
-    <!-- Result area -->
-    <div id="result" class="result-box"></div>
   </div>
 
-  <script src="script-form.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("detailsForm");
+
+      // Fixed passkey
+      const fixedPasskey = "OPEN";
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault(); // stop page reload
+
+        const name = document.getElementById("name").value.trim();
+
+        // Show passkey in an alert
+        alert(`Thank you, ${name}!\nYour passkey for the website is: ${fixedPasskey}`);
+      });
+    });
+  </script>
 </body>
 </html>
