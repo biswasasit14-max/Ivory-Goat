@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Access Denied</title>
+  <title>Forbidden</title>
   <style>
     body {
       background-color: #111;
@@ -10,6 +10,12 @@
       font-family: Arial, sans-serif;
       text-align: center;
       padding-top: 100px;
+    }
+
+    h1 {
+      color: #ff0000;
+      margin-bottom: 20px;
+      font-size: 2.5em;
     }
 
     .denied-box {
@@ -22,23 +28,16 @@
       color: #ff0000;
       background-color: rgba(255, 0, 0, 0.1);
       box-shadow: 0 0 20px #ff0000;
+      animation: shakeAnim 0.4s infinite, glowPulse 1s infinite alternate;
     }
 
     /* Glow effect */
-    .glow-error {
-      animation: glowPulse 1s infinite alternate;
-    }
-
     @keyframes glowPulse {
       from { box-shadow: 0 0 10px #ff0000; }
       to   { box-shadow: 0 0 30px #ff0000; }
     }
 
-    /* Shake effect */
-    .shake {
-      animation: shakeAnim 0.4s;
-    }
-
+    /* Continuous shake effect */
     @keyframes shakeAnim {
       0%   { transform: translateX(0); }
       25%  { transform: translateX(-10px); }
@@ -49,21 +48,9 @@
   </style>
 </head>
 <body>
-  <div id="deniedBox" class="denied-box">
+  <h1>Forbidden</h1>
+  <div class="denied-box">
     ACCESS DENIED
   </div>
-
-  <script>
-    // Apply glow and shake when page loads
-    window.addEventListener("DOMContentLoaded", () => {
-      const box = document.getElementById("deniedBox");
-      box.classList.add("glow-error", "shake");
-
-      // Remove shake after animation so it can be reapplied if needed
-      setTimeout(() => {
-        box.classList.remove("shake");
-      }, 500);
-    });
-  </script>
 </body>
 </html>
