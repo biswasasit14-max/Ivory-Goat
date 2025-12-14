@@ -23,7 +23,7 @@ function checkPasskey() {
 
                 // Redirect to Home.html when clicked
                 openButton.onclick = () => {
-                    window.location.href = "Home.html";
+                    window.location.href = "Home.php";
                 };
             } else {
                 // Disable button + red glow + shake
