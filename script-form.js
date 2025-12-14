@@ -3,15 +3,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("detailsForm");
   const resultBox = document.getElementById("result");
 
-  // Fixed passkey
   const fixedPasskey = "OPEN";
 
   form.addEventListener("submit", (event) => {
-    event.preventDefault(); // stop page reload
+    event.preventDefault();
 
     const name = document.getElementById("name").value.trim();
 
-    // Show result with copy button
+    // Fill result content
     resultBox.innerHTML = `
       Thank you, <strong>${name}</strong>!<br>
       Your passkey for the website is:<br>
@@ -19,21 +18,21 @@ document.addEventListener("DOMContentLoaded", () => {
       <button class="copy-btn" id="copyBtn">Copy to Clipboard</button>
     `;
 
-    // Trigger slide-up animation
-    resultBox.classList.remove("show-result"); // reset if already shown
+    // Reset animation if already applied
+    resultBox.classList.remove("show-result");
     void resultBox.offsetWidth; // force reflow
     resultBox.classList.add("show-result");
 
-    // Add copy functionality
+    // Copy button functionality
     const copyBtn = document.getElementById("copyBtn");
     copyBtn.addEventListener("click", () => {
       const passkeyText = document.getElementById("passkey").textContent;
       navigator.clipboard.writeText(passkeyText).then(() => {
         copyBtn.textContent = "Copied!";
-        copyBtn.style.background = "#34d399"; // brighter green
+        copyBtn.style.background = "#34d399";
         setTimeout(() => {
           copyBtn.textContent = "Copy to Clipboard";
-          copyBtn.style.background = "#86efac"; // reset
+          copyBtn.style.background = "#86efac";
         }, 2000);
       });
     });
