@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['authenticated'])) {
+    header("Location: index.html");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -148,7 +155,7 @@
     </p>
     <main>
         <!-- Back Button -->
-        <a href="Home.html" class="back-btn">← Back</a>
+        <a href="Home.php" class="back-btn">← Back</a>
 
         <section>
             <h2>About the School</h2>
@@ -206,4 +213,5 @@
     </footer>
 </body>
 </html>
+
 
