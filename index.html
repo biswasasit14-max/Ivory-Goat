@@ -122,6 +122,20 @@
       box-shadow: none;
     }
 
+    /* New inline link style */
+    .get-passkey {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 0.95em;
+      color: #4CAF50;
+      text-decoration: none;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+    .get-passkey:hover {
+      color: #2e7d32;
+      text-shadow: 0 0 6px rgba(76,175,80,0.6);
+    }
+
     footer {
       background-color: #222;
       color: #ccc;
@@ -151,6 +165,13 @@
     <button class="btn" id="myButton" type="button" disabled>
       <i class="fas fa-link"></i> Continue
     </button>
+
+    <!-- New inline link -->
+    <p>
+      <a href="form.html" class="get-passkey">
+        <i class="fas fa-external-link-alt"></i> Get Passkey
+      </a>
+    </p>
   </div>
 
   <footer>
