@@ -9,6 +9,28 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-6px); }
+      80% { transform: translateX(6px); }
+    }
+    .shake { animation: shake 0.4s; }
+
+    @keyframes glowSuccess {
+      0%   { box-shadow: 0 0 12px 4px rgba(76,175,80,0.8); border-color: #4CAF50; }
+      70%  { box-shadow: 0 0 12px 4px rgba(76,175,80,0.4); }
+      100% { box-shadow: none; border-color: #aaa; }
+    }
+    @keyframes glowError {
+      0%   { box-shadow: 0 0 12px 4px rgba(244,67,54,0.8); border-color: #f44336; }
+      70%  { box-shadow: 0 0 12px 4px rgba(244,67,54,0.4); }
+      100% { box-shadow: none; border-color: #aaa; }
+    }
+    .glow-success { animation: glowSuccess 2s ease-out forwards; }
+    .glow-error { animation: glowError 2s ease-out forwards; }
+
     body {
       font-family: Arial, Helvetica, sans-serif;
       margin: 0;
@@ -40,6 +62,7 @@
       transition: box-shadow 0.4s ease;
     }
 
+    /* Input with icon */
     .input-group {
       display: flex;
       align-items: center;
@@ -68,6 +91,7 @@
       background: transparent;
     }
 
+    /* Buttons */
     .btn {
       margin-top: 16px;
       padding: 12px 20px;
@@ -112,6 +136,8 @@
     }
     footer p { margin: 0; }
   </style>
+
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>Authentication Portal</h1>
@@ -119,17 +145,15 @@
   <div class="captchaBox" id="captchaBox">
     <!-- Input with lock icon -->
     <div class="input-group">
-      <i class="fas fa-lock" aria-hidden="true"></i>
-      <input type="password" id="passkeyInput" placeholder="Enter Passkey" aria-label="Passkey">
+      <i class="fas fa-lock"></i>
+      <input type="password" id="passkeyInput" placeholder="Enter Passkey">
     </div>
 
-    <!-- Buttons -->
-    <button class="btn" id="passkeyBtn" type="button">
-      <i class="fas fa-key" aria-hidden="true"></i> Use Passkey
-    </button>
+    <button class="btn" id="passkeyBtn"><i class="fas fa-key"></i> Use Passkey</button>
 
+    <!-- Open Link button starts disabled -->
     <button class="btn" id="myButton" type="button" disabled>
-      <i class="fas fa-link" aria-hidden="true"></i> Open Link
+      <i class="fas fa-link"></i> Open Link
     </button>
   </div>
 
@@ -137,7 +161,7 @@
     <p>© 2025 Made by The Rope Garage Co. All rights reserved.</p>
   </footer>
 
-  <!-- JS logic -->
+  <!-- Only one JS file now -->
   <script src="script.js"></script>
 </body>
 </html>
