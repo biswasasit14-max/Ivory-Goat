@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['authenticated'])) {
-    header("Location: index.html");
+    header("Location: access-denied.html");
     exit;
 }
 ?>
@@ -171,5 +171,6 @@ if (!isset($_SESSION['authenticated'])) {
     </footer>
 </body>
 </html>
+
 
 
