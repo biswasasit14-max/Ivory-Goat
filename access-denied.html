@@ -18,15 +18,21 @@
       margin-bottom: 20px;
     }
 
-    .denied-box {
+    .card {
       display: inline-block;
-      padding: 20px 40px;
+      padding: 30px 50px;
       border: 2px solid #cc0000;
-      border-radius: 6px;
+      border-radius: 8px;
+      background-color: #fdfdfd;
+      box-shadow: 0 0 10px rgba(204, 0, 0, 0.2);
+      max-width: 400px;
+    }
+
+    .denied-text {
       font-size: 1.8em;
       font-weight: bold;
       color: #cc0000;
-      background-color: rgba(255, 0, 0, 0.05);
+      margin-bottom: 15px;
     }
 
     /* Glow effect */
@@ -35,8 +41,8 @@
     }
 
     @keyframes glowPulse {
-      from { box-shadow: 0 0 5px rgba(204, 0, 0, 0.6); }
-      to   { box-shadow: 0 0 20px rgba(204, 0, 0, 0.9); }
+      from { text-shadow: 0 0 5px rgba(204, 0, 0, 0.6); }
+      to   { text-shadow: 0 0 15px rgba(204, 0, 0, 0.9); }
     }
 
     /* Shake effect */
@@ -52,8 +58,7 @@
       100% { transform: translateX(0); }
     }
 
-    p {
-      margin-top: 20px;
+    .explanation {
       font-size: 1em;
       color: #555;
     }
@@ -61,10 +66,10 @@
 </head>
 <body>
   <h2>Forbidden</h2>
-  <div id="deniedBox" class="denied-box">
-    ACCESS DENIED
+  <div class="card">
+    <div id="deniedBox" class="denied-text">ACCESS DENIED</div>
+    <p id="explanation" class="explanation"></p>
   </div>
-  <p id="explanation"></p>
 
   <script>
     window.addEventListener("DOMContentLoaded", () => {
@@ -80,9 +85,10 @@
         box.classList.add("glow-error");
       }, 600);
 
-      // Example: dynamically show what was attempted
-      // Replace "some article within the website" with actual context if available
-      const attemptedPage = "some article within the website";
+      // Read attempted page from query string
+      const params = new URLSearchParams(window.location.search);
+      const attemptedPage = params.get("attempted") || "a protected page";
+
       explanation.textContent = `You tried to access ${attemptedPage} without entering the passkey.`;
     });
   </script>
