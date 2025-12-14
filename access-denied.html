@@ -25,7 +25,7 @@
       border-radius: 8px;
       background-color: #fdfdfd;
       box-shadow: 0 0 10px rgba(204, 0, 0, 0.2);
-      max-width: 400px;
+      max-width: 420px;
     }
 
     .denied-text {
@@ -61,6 +61,22 @@
     .explanation {
       font-size: 1em;
       color: #555;
+      margin-bottom: 20px;
+    }
+
+    .retry-btn {
+      background-color: #cc0000;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s ease;
+    }
+
+    .retry-btn:hover {
+      background-color: #a00000;
     }
   </style>
 </head>
@@ -69,6 +85,7 @@
   <div class="card">
     <div id="deniedBox" class="denied-text">ACCESS DENIED</div>
     <p id="explanation" class="explanation"></p>
+    <button class="retry-btn" onclick="window.location.href='index.html'">Retry</button>
   </div>
 
   <script>
