@@ -6,6 +6,12 @@ $correctPasskey = "OPEN";
 $userPasskey = $_POST["passkey"] ?? "";
 $clientIp = $_SERVER['REMOTE_ADDR'];
 
+// Configurable thresholds
+$sessionMaxAttempts = isset($_POST['maxAttempts']) ? (int)$_POST['maxAttempts'] : 3; // short lockout
+$ipMaxAttempts = 10; // persistent ban threshold
+$sessionLockoutDuration = 180; // 3 minutes
+$ipLockoutDuration = 14 * 24 * 60 * 60; // 2 weeks
+
 // Path to JSON file
 $blockFile = __DIR__ . "/blocked_ips.json";
 if (!file_exists($blockFile)) {
@@ -19,7 +25,7 @@ foreach ($blockedIps as $ip => $info) {
         unset($blockedIps[$ip]);
     }
 }
-file_put_contents($blockFile, json_encode($blockedIps));
+file_put_contents($blockFile, json_encode($blockedIps, JSON_PRETTY_PRINT));
 
 // --- Check if current IP is blocked ---
 if (isset($blockedIps[$clientIp]) && time() < $blockedIps[$clientIp]['expiry']) {
@@ -30,7 +36,7 @@ if (isset($blockedIps[$clientIp]) && time() < $blockedIps[$clientIp]['expiry']) 
 // --- Passkey check ---
 if ($userPasskey === $correctPasskey) {
     $_SESSION['authenticated'] = true;
-    unset($_SESSION['failed_attempts']);
+    $_SESSION['failed_attempts'] = 0; // reset
     echo "success";
 } else {
     if (!isset($_SESSION['failed_attempts'])) {
@@ -38,17 +44,16 @@ if ($userPasskey === $correctPasskey) {
     }
     $_SESSION['failed_attempts']++;
 
-    if ($_SESSION['failed_attempts'] > 10) {
-        // Block IP for 2 weeks (14 days)
-        $expiry = time() + (14 * 24 * 60 * 60);
+    // Persistent ban after ipMaxAttempts
+    if ($_SESSION['failed_attempts'] > $ipMaxAttempts) {
+        $expiry = time() + $ipLockoutDuration;
 
-        // Get location info (basic example using ipinfo.io)
+        // Optional: get location info
         $location = @file_get_contents("http://ipinfo.io/{$clientIp}/json");
         $locationData = $location ? json_decode($location, true) : [];
         $country = $locationData['country'] ?? "Unknown";
         $region  = $locationData['region'] ?? "Unknown";
 
-        // Save metadata
         $blockedIps[$clientIp] = [
             'expiry' => $expiry,
             'blocked_at' => date("Y-m-d H:i:s"),
@@ -58,6 +63,11 @@ if ($userPasskey === $correctPasskey) {
         ];
 
         file_put_contents($blockFile, json_encode($blockedIps, JSON_PRETTY_PRINT));
+        echo "timeout";
+    }
+    // Short session lockout
+    elseif ($_SESSION['failed_attempts'] >= $sessionMaxAttempts) {
+        $_SESSION['lockout_until'] = time() + $sessionLockoutDuration;
         echo "timeout";
     } else {
         echo "fail";
