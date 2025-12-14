@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Timeout</title>
+  <style>
+    body {
+      background-color: #f9f9f9;
+      font-family: "Segoe UI", Arial, sans-serif;
+      text-align: center;
+      padding-top: 80px;
+      color: #333;
+    }
+
+    .card {
+      display: inline-block;
+      padding: 30px 50px;
+      border: 2px solid #cc0000;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 0 0 15px rgba(204, 0, 0, 0.2);
+      max-width: 420px;
+      animation: glowPulse 2s ease-in-out infinite alternate;
+    }
+
+    h2 {
+      color: #cc0000;
+      margin-bottom: 20px;
+      font-size: 1.8em;
+    }
+
+    p {
+      margin: 10px 0;
+      font-size: 1em;
+      color: #555;
+    }
+
+    #countdown {
+      margin: 20px 0;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #333;
+    }
+
+    #retryBtn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background: #ccc;
+      color: #fff;
+      cursor: not-allowed;
+      font-size: 1em;
+      transition: background-color 0.3s ease;
+    }
+
+    #retryBtn.enabled {
+      background-color: #28a745;
+      cursor: pointer;
+    }
+
+    #retryBtn.enabled:hover {
+      background-color: #218838;
+    }
+
+    @keyframes glowPulse {
+      from { box-shadow: 0 0 10px rgba(204, 0, 0, 0.4); }
+      to   { box-shadow: 0 0 25px rgba(204, 0, 0, 0.7); }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Timeout</h2>
+    <p>You entered the wrong passkey too many times.</p>
+    <div id="countdown">Please wait 3:00 minutes...</div>
+    <button id="retryBtn" disabled>Back to Login</button>
+  </div>
+
+  <script>
+    let timeLeft = 180; // 3 minutes in seconds
+    const countdownEl = document.getElementById("countdown");
+    const retryBtn = document.getElementById("retryBtn");
+
+    const timer = setInterval(() => {
+      timeLeft--;
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      countdownEl.textContent = `Please wait ${minutes}:${seconds.toString().padStart(2, '0')} minutes...`;
+
+      if (timeLeft <= 0) {
+        clearInterval(timer);
+        countdownEl.textContent = "You may now retry.";
+        retryBtn.disabled = false;
+        retryBtn.classList.add("enabled");
+        retryBtn.textContent = "Back to Login";
+        retryBtn.onclick = () => window.location.href = "index.html";
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
