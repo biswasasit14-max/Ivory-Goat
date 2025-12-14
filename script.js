@@ -21,7 +21,7 @@ function checkPasskey() {
         openButton.disabled = false;
         captchaBox.classList.add("glow-success");
 
-        // Add click handler to open Home.html
+        // Redirect to Home.html when clicked
         openButton.onclick = () => {
           window.location.href = "Home.html";
         };
@@ -39,10 +39,8 @@ function checkPasskey() {
 
 // Attach event listeners after DOM loads
 document.addEventListener("DOMContentLoaded", () => {
-  // Passkey check button
   document.getElementById("passkeyBtn").addEventListener("click", checkPasskey);
 
-  // Hover effects for Open Link button
   const btn = document.getElementById("myButton");
   btn.addEventListener("mouseover", () => {
     if (!btn.disabled) {
@@ -52,11 +50,11 @@ document.addEventListener("DOMContentLoaded", () => {
   btn.addEventListener("mouseout", () => {
     btn.style.backgroundColor = "";
   });
-});
 
-// Allow pressing Enter to trigger check
-document.getElementById("passkeyInput").addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    checkPasskey();
-  }
+  // Allow pressing Enter to trigger check
+  document.getElementById("passkeyInput").addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      checkPasskey();
+    }
+  });
 });
