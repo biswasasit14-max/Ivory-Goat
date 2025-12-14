@@ -15,59 +15,43 @@
 
     h1 {
         font-size: 2em;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
     }
 
-    .progress-container {
-        width: 80%;
-        max-width: 500px;
-        height: 40px;
-        background: #222;
-        border-radius: 25px;
-        overflow: hidden;
-        margin: 0 auto;
-        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    /* Spinner container */
+    .spinner {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 8px solid rgba(144, 238, 144, 0.2); /* light green transparent */
+        border-top: 8px solid rgba(144, 238, 144, 0.9); /* brighter green */
+        animation: spin 1.2s linear infinite, glow 2s ease-in-out infinite;
+        margin: 0 auto 20px;
     }
 
-    .progress-bar {
-        height: 100%;
-        width: 0%;
-        background: linear-gradient(
-            120deg,
-            rgba(0, 200, 255, 0.8) 25%,
-            rgba(0, 150, 255, 0.9) 50%,
-            rgba(0, 200, 255, 0.8) 75%
-        );
-        background-size: 200% 100%;
-        animation: flow 2s linear infinite, fillUp 5s ease-in-out forwards;
+    /* Rotation animation */
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
     }
 
-    /* Fluid flowing animation */
-    @keyframes flow {
-        0% { background-position: 0% 0; }
-        100% { background-position: 200% 0; }
+    /* Subtle glowing effect */
+    @keyframes glow {
+        0%, 100% { box-shadow: 0 0 5px rgba(144, 238, 144, 0.6); }
+        50% { box-shadow: 0 0 20px rgba(144, 238, 144, 0.9); }
     }
 
-    /* Smooth fill animation to a set percentage */
-    @keyframes fillUp {
-        0% { width: 0%; }
-        100% { width: 65%; } /* Change this to your desired percentage */
-    }
-
-    .percentage {
-        margin-top: 15px;
+    .status {
         font-size: 1.2em;
-        color: #00c8ff;
+        color: #90ee90; /* light green text */
     }
 </style>
 </head>
 <body>
 
     <h1>🚧 Work in Progress 🚧</h1>
-    <div class="progress-container">
-        <div class="progress-bar"></div>
-    </div>
-    <div class="percentage">65% Complete</div>
+    <div class="spinner"></div>
+    <div class="status">Loading... Please wait</div>
 
 </body>
 </html>
