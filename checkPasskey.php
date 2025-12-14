@@ -13,19 +13,26 @@ if (!file_exists($blockFile)) {
 }
 $blockedIps = json_decode(file_get_contents($blockFile), true);
 
-// If IP is already blocked
-if (isset($blockedIps[$clientIp]) && time() < $blockedIps[$clientIp]) {
+// --- Cleanup expired IPs ---
+foreach ($blockedIps as $ip => $info) {
+    if (time() >= $info['expiry']) {
+        unset($blockedIps[$ip]);
+    }
+}
+file_put_contents($blockFile, json_encode($blockedIps));
+
+// --- Check if current IP is blocked ---
+if (isset($blockedIps[$clientIp]) && time() < $blockedIps[$clientIp]['expiry']) {
     echo "timeout";
     exit;
 }
 
-// Correct passkey
+// --- Passkey check ---
 if ($userPasskey === $correctPasskey) {
     $_SESSION['authenticated'] = true;
     unset($_SESSION['failed_attempts']);
     echo "success";
 } else {
-    // Track failed attempts in session
     if (!isset($_SESSION['failed_attempts'])) {
         $_SESSION['failed_attempts'] = 0;
     }
@@ -33,8 +40,24 @@ if ($userPasskey === $correctPasskey) {
 
     if ($_SESSION['failed_attempts'] > 10) {
         // Block IP for 2 weeks (14 days)
-        $blockedIps[$clientIp] = time() + (14 * 24 * 60 * 60);
-        file_put_contents($blockFile, json_encode($blockedIps));
+        $expiry = time() + (14 * 24 * 60 * 60);
+
+        // Get location info (basic example using ipinfo.io)
+        $location = @file_get_contents("http://ipinfo.io/{$clientIp}/json");
+        $locationData = $location ? json_decode($location, true) : [];
+        $country = $locationData['country'] ?? "Unknown";
+        $region  = $locationData['region'] ?? "Unknown";
+
+        // Save metadata
+        $blockedIps[$clientIp] = [
+            'expiry' => $expiry,
+            'blocked_at' => date("Y-m-d H:i:s"),
+            'attempts' => $_SESSION['failed_attempts'],
+            'country' => $country,
+            'state' => $region
+        ];
+
+        file_put_contents($blockFile, json_encode($blockedIps, JSON_PRETTY_PRINT));
         echo "timeout";
     } else {
         echo "fail";
