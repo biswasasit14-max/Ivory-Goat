@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['authenticated'])) {
+    header("Location: index.html");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -138,10 +145,10 @@
     </p>
 
     <nav>
-        <a href="About Us.html">About</a>
-        <a href="Departments.html">Departments</a>
-        <a href="WIP.html">Contact Us</a>
-        <a href="LICENSE.html">License</a>
+        <a href="About Us.php">About</a>
+        <a href="Departments.php">Departments</a>
+        <a href="WIP.php">Contact Us</a>
+        <a href="LICENSE.php">License</a>
     </nav>
 
     <main>
@@ -164,4 +171,5 @@
     </footer>
 </body>
 </html>
+
 
