@@ -1,32 +1,115 @@
-<!-- form.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Basic Details Form</title>
   <style>
-    /* style.css */
-.result-box {
-  margin-top: 20px;
-  font-size: 18px;
-  font-weight: bold;
-  color: #0078d7;
-}
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0fdf4; /* very light green background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
 
-.copy-btn {
-  margin-top: 10px;
-  padding: 6px 12px;
-  background: #28a745;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
+    .form-container {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 320px;
+      border: 2px solid #bbf7d0; /* light green border */
+    }
 
-.copy-btn:hover {
-  background: #218838;
-}
+    h2 {
+      text-align: center;
+      color: #166534; /* deep green */
+      margin-bottom: 20px;
+    }
 
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: 600;
+      color: #065f46; /* darker green */
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border: 1px solid #a7f3d0;
+      border-radius: 6px;
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #34d399;
+      box-shadow: 0 0 6px rgba(52, 211, 153, 0.5);
+    }
+
+    button[type="submit"] {
+      margin-top: 18px;
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #6ee7b7, #34d399);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    button[type="submit"]:hover {
+      background: linear-gradient(135deg, #34d399, #059669);
+      transform: translateY(-2px);
+    }
+
+    .result-box {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #065f46;
+      text-align: center;
+      opacity: 0; /* hidden initially */
+    }
+
+    /* Slide-up animation */
+    @keyframes slideUp {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .show-result {
+      animation: slideUp 0.6s ease forwards;
+    }
+
+    .copy-btn {
+      margin-top: 12px;
+      padding: 8px 14px;
+      background: #86efac; /* light green */
+      color: #065f46;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .copy-btn:hover {
+      background: #4ade80; /* brighter green */
+      transform: scale(1.05);
+    }
   </style>
 </head>
 <body>
