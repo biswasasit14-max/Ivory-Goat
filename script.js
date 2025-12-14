@@ -21,9 +21,10 @@ function checkPasskey() {
         openButton.disabled = false;
         captchaBox.classList.add("glow-success");
 
-        // Redirect to Home.html when clicked
+        // Redirect randomly to Home.html or Directory.html when clicked
         openButton.onclick = () => {
-          window.location.href = "Home.html";
+          const randomChoice = Math.random() < 0.5 ? "Home.html" : "Directory.html";
+          window.location.href = randomChoice;
         };
       } else {
         // Disable button + red glow + shake
