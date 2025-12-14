@@ -2,55 +2,89 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Forbidden</title>
+  <title>Access Denied</title>
   <style>
     body {
-      background-color: #111;
-      color: #fff;
+      background-color: #fff;
+      color: #333;
       font-family: Arial, sans-serif;
       text-align: center;
-      padding-top: 100px;
+      padding-top: 80px;
     }
 
-    h1 {
-      color: #ff0000;
+    h2 {
+      color: #cc0000;
+      font-size: 1.5em;
       margin-bottom: 20px;
-      font-size: 2.5em;
     }
 
     .denied-box {
       display: inline-block;
-      padding: 30px 50px;
-      border: 2px solid #ff0000;
-      border-radius: 8px;
-      font-size: 2em;
+      padding: 20px 40px;
+      border: 2px solid #cc0000;
+      border-radius: 6px;
+      font-size: 1.8em;
       font-weight: bold;
-      color: #ff0000;
-      background-color: rgba(255, 0, 0, 0.1);
-      box-shadow: 0 0 20px #ff0000;
-      animation: shakeAnim 0.4s infinite, glowPulse 1s infinite alternate;
+      color: #cc0000;
+      background-color: rgba(255, 0, 0, 0.05);
     }
 
     /* Glow effect */
-    @keyframes glowPulse {
-      from { box-shadow: 0 0 10px #ff0000; }
-      to   { box-shadow: 0 0 30px #ff0000; }
+    .glow-error {
+      animation: glowPulse 1.5s ease-in-out infinite alternate;
     }
 
-    /* Continuous shake effect */
+    @keyframes glowPulse {
+      from { box-shadow: 0 0 5px rgba(204, 0, 0, 0.6); }
+      to   { box-shadow: 0 0 20px rgba(204, 0, 0, 0.9); }
+    }
+
+    /* Shake effect */
+    .shake {
+      animation: shakeAnim 0.5s;
+    }
+
     @keyframes shakeAnim {
       0%   { transform: translateX(0); }
-      25%  { transform: translateX(-10px); }
-      50%  { transform: translateX(10px); }
-      75%  { transform: translateX(-10px); }
+      25%  { transform: translateX(-8px); }
+      50%  { transform: translateX(8px); }
+      75%  { transform: translateX(-8px); }
       100% { transform: translateX(0); }
+    }
+
+    p {
+      margin-top: 20px;
+      font-size: 1em;
+      color: #555;
     }
   </style>
 </head>
 <body>
-  <h1>Forbidden</h1>
-  <div class="denied-box">
+  <h2>Forbidden</h2>
+  <div id="deniedBox" class="denied-box">
     ACCESS DENIED
   </div>
+  <p id="explanation"></p>
+
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      const box = document.getElementById("deniedBox");
+      const explanation = document.getElementById("explanation");
+
+      // Shake once on load
+      box.classList.add("shake");
+
+      // After shake ends, switch to glow only
+      setTimeout(() => {
+        box.classList.remove("shake");
+        box.classList.add("glow-error");
+      }, 600);
+
+      // Example: dynamically show what was attempted
+      // Replace "some article within the website" with actual context if available
+      const attemptedPage = "some article within the website";
+      explanation.textContent = `You tried to access ${attemptedPage} without entering the passkey.`;
+    });
+  </script>
 </body>
 </html>
