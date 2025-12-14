@@ -8,21 +8,56 @@
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <!-- Google reCAPTCHA script -->
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
   <style>
-    body { font-family: Arial, sans-serif; background:#f9f9f9; text-align:center; }
-    h1 { font-family: monospace; background: linear-gradient(135deg,#4CAF50,#2e7d32); color:white; padding:20px; margin:0; }
-    .captchaBox { margin:40px auto; padding:25px; width:360px; background:#fff; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15); }
-    .input-group { display:flex; align-items:center; border:1px solid #aaa; border-radius:8px; padding:10px 12px; margin-top:14px; }
+    body {
+      font-family: Arial, sans-serif; background:#f9f9f9; text-align:center; 
+    }
+    
+    h1 { 
+      font-family: monospace; 
+      background: linear-gradient(135deg,#4CAF50,#2e7d32); 
+      color:white; padding:20px; margin:0; 
+    }
+    
+    .captchaBox { 
+      margin:40px auto; padding:25px; width:360px; 
+      background:#fff; border-radius:12px; 
+      box-shadow:0 4px 12px rgba(0,0,0,0.15); 
+    }
+    
+    .input-group { 
+      display:flex; align-items:center; border:1px solid #aaa; 
+      border-radius:8px; padding:10px 12px; margin-top:14px; 
+    }
+    
     .input-group i { color:#4CAF50; margin-right:10px; font-size:1.2em; }
+    
     .input-group input { border:none; outline:none; flex:1; font-size:1em; padding:8px; }
-    .btn { margin-top:16px; padding:12px 20px; background:linear-gradient(135deg,#4CAF50,#2e7d32); color:white; border:none; border-radius:8px; cursor:pointer; font-weight:600; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; }
-    .btn:hover { background:linear-gradient(135deg,#45a049,#1b5e20); transform:translateY(-2px); }
-    .get-passkey { display:inline-block; margin-top:12px; font-size:0.95em; color:#4CAF50; text-decoration:none; }
-    .get-passkey:hover { color:#2e7d32; text-shadow:0 0 6px rgba(76,175,80,0.6); }
-    footer { background:#222; color:#ccc; padding:15px; position:fixed; bottom:0; width:100%; font-size:0.9em; }
+    
+    .btn 
+    { margin-top:16px; padding:12px 20px; background:linear-gradient(135deg,#4CAF50,#2e7d32); 
+     color:white; border:none; border-radius:8px; 
+     cursor:pointer; font-weight:600; width:100%; 
+     display:flex; align-items:center; justify-content:center; gap:8px; 
+    }
+    
+    .btn:hover { 
+      background:linear-gradient(135deg,#45a049,#1b5e20); 
+      transform:scale(1.25); 
+               }
+    .get-passkey { 
+      display:inline-block; margin-top:12px; font-size:0.95em; 
+      color:#4CAF50; text-decoration:none; 
+    }
+    
+    .get-passkey:hover { 
+      color:#2e7d32; text-shadow:0 0 6px rgba(76,175,80,0.6); 
+    }
+    
+    footer { 
+      background:#222; color:#ccc; padding:15px; position:fixed; 
+      bottom:0; width:100%; font-size:0.9em; 
+    }
   </style>
 </head>
 <body>
@@ -34,10 +69,7 @@
         <i class="fas fa-lock"></i>
         <input type="password" id="passkeyInput" name="passkey" placeholder="Enter Passkey" required>
       </div>
-
-      <!-- reCAPTCHA widget -->
-      <div class="g-recaptcha" data-sitekey="6LepPCssAAAAAKiWquVC9uYs8oZQM8qL0BCNDxmk"></div>
-
+        
       <button class="btn" type="submit">
         <i class="fas fa-key"></i> Submit
       </button>
@@ -59,8 +91,8 @@
   </footer>
 
   <script src="script.js"></script>
-  <script src="script-verify.js"></script>
 </body>
 </html>
+
 
 
