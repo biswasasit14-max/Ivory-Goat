@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Secure Access Portal</title>
+  <title>Authentication Portal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Secure authentication portal for access. Enter your passkey to continue.">
 
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -39,9 +38,6 @@
       background-color: #f9f9f9;
       color: #333;
       text-align: center;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
     }
 
     h1 {
@@ -53,13 +49,6 @@
       font-size: 2em;
       box-shadow: 0 2px 4px rgba(0,0,0,0.2);
       border-bottom: 3px solid #45a049;
-    }
-
-    main {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     .captchaBox {
@@ -104,81 +93,3 @@
     .btn {
       margin-top: 16px;
       padding: 12px 20px;
-      background: linear-gradient(135deg, #4CAF50, #2e7d32);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-      font-weight: 600;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-size: 1em;
-    }
-    .btn:hover {
-      background: linear-gradient(135deg, #45a049, #1b5e20);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-    }
-    .btn:active {
-      background: #3e8e41;
-      transform: scale(0.98);
-    }
-    .btn:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-      box-shadow: none;
-      color: #666;
-    }
-
-    footer {
-      background-color: #222;
-      color: #ddd;
-      padding: 15px;
-      font-size: 0.9em;
-      box-shadow: 0 -2px 4px rgba(0,0,0,0.2);
-      margin-top: auto;
-    }
-    footer p { margin: 0; }
-
-    @media (max-width: 420px) {
-      .captchaBox {
-        width: 90%;
-        padding: 20px;
-      }
-    }
-
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0,0,0,0);
-      border: 0;
-    }
-  </style>
-</head>
-<body>
-  <h1>Secure Access Portal</h1>
-
-  <main>
-    <div class="captchaBox" id="captchaBox">
-      <div class="input-group">
-        <label for="passkeyInput" class="sr-only">Passkey</label>
-        <i class="fas fa-lock"></i>
-        <input type="password" id="passkeyInput" placeholder="Enter Passkey" autocomplete="off" aria-describedby="statusMessage">
-      </div>
-
-      <button class="btn" id="passkeyBtn"><i class="fas fa-key"></i> Verify Passkey </button>
-
-      <button class="btn" id="myButton" type="button" disabled>
-        <i class="fas fa-link"></i> Proceed
-      </button>
-
-      <div id="statusMessage" aria-live="polite"></div>
-    </div>
