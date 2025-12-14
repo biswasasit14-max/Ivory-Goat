@@ -29,7 +29,7 @@ file_put_contents($blockFile, json_encode($blockedIps, JSON_PRETTY_PRINT));
 
 // --- Check if current IP is blocked ---
 if (isset($blockedIps[$clientIp]) && time() < $blockedIps[$clientIp]['expiry']) {
-    echo "timeout";
+    echo "timeout:ip";
     exit;
 }
 
@@ -63,14 +63,15 @@ if ($userPasskey === $correctPasskey) {
         ];
 
         file_put_contents($blockFile, json_encode($blockedIps, JSON_PRETTY_PRINT));
-        echo "timeout";
+        echo "timeout:ip";
     }
     // Short session lockout
     elseif ($_SESSION['failed_attempts'] >= $sessionMaxAttempts) {
         $_SESSION['lockout_until'] = time() + $sessionLockoutDuration;
-        echo "timeout";
+        echo "timeout:session";
     } else {
         echo "fail";
     }
 }
 ?>
+ 
