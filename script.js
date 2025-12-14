@@ -39,8 +39,10 @@ function checkPasskey() {
 
 // Attach event listeners after DOM loads
 document.addEventListener("DOMContentLoaded", () => {
+  // Passkey check button
   document.getElementById("passkeyBtn").addEventListener("click", checkPasskey);
 
+  // Hover effects for Open Link button
   const btn = document.getElementById("myButton");
   btn.addEventListener("mouseover", () => {
     if (!btn.disabled) {
