@@ -70,29 +70,31 @@
     }
 
     .result-box {
-      margin-top: 20px;
-      font-size: 18px;
-      font-weight: bold;
-      color: #065f46;
-      text-align: center;
-      opacity: 0; /* hidden initially */
-    }
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #065f46;
+  text-align: center;
+  opacity: 0; /* hidden initially */
+}
 
-    /* Slide-up animation */
-    @keyframes slideUp {
-      from {
-        transform: translateY(30px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
+/* Slide-up animation */
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
 
-    .show-result {
-      animation: slideUp 0.6s ease forwards;
-    }
+.show-result {
+  animation: slideUp 0.6s ease forwards;
+  opacity: 1; /* ensure it's visible after animation */
+}
+
 
     .copy-btn {
       margin-top: 12px;
