@@ -23,8 +23,7 @@ function checkPasskey() {
 
         // Redirect randomly to Home.html or Directory.html when clicked
         openButton.onclick = () => {
-          const randomChoice = Math.random() < 0.5 ? "Home.html" : "Directory.html";
-          window.location.href = randomChoice;
+          window.location.href = Home.html;
         };
       } else {
         // Disable button + red glow + shake
