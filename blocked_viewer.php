@@ -2,75 +2,81 @@
 // blocked_viewer.php
 
 $blockFile = __DIR__ . "/blocked_ips.json";
-$blockedIps = [];
+$archiveFile = __DIR__ . "/archived_ips.json";
 
-if (file_exists($blockFile)) {
-    $blockedIps = json_decode(file_get_contents($blockFile), true);
-}
+// Load files
+$blockedIps = file_exists($blockFile) ? json_decode(file_get_contents($blockFile), true) : [];
+$archivedIps = file_exists($archiveFile) ? json_decode(file_get_contents($archiveFile), true) : [];
 
 // Handle actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Delete one IP
-    if (isset($_POST['delete_ip'])) {
-        $ip = $_POST['delete_ip'];
-        unset($blockedIps[$ip]);
-    }
-
-    // Clear all
-    if (isset($_POST['clear_all'])) {
-        $blockedIps = [];
-    }
-
-    // Clear expired
-    if (isset($_POST['clear_expired'])) {
+    // Archive expired
+    if (isset($_POST['archive_expired'])) {
         foreach ($blockedIps as $ip => $info) {
             if (time() >= $info['expiry']) {
+                $archivedIps[$ip] = $info;
                 unset($blockedIps[$ip]);
             }
         }
     }
 
-    // Clear by country
-    if (isset($_POST['clear_country'])) {
-        $country = $_POST['clear_country'];
-        foreach ($blockedIps as $ip => $info) {
-            if (strcasecmp($info['country'], $country) === 0) {
-                unset($blockedIps[$ip]);
-            }
-        }
-    }
-
-    // Clear by state
-    if (isset($_POST['clear_state'])) {
-        $state = $_POST['clear_state'];
-        foreach ($blockedIps as $ip => $info) {
-            if (strcasecmp($info['state'], $state) === 0) {
-                unset($blockedIps[$ip]);
-            }
-        }
-    }
-
-    // Clear older than date
-    if (isset($_POST['clear_before'])) {
-        $date = strtotime($_POST['clear_before']);
+    // Archive before date
+    if (isset($_POST['archive_before'])) {
+        $date = strtotime($_POST['archive_before']);
         foreach ($blockedIps as $ip => $info) {
             if (strtotime($info['blocked_at']) < $date) {
+                $archivedIps[$ip] = $info;
                 unset($blockedIps[$ip]);
             }
         }
     }
 
-    // Bulk delete selected
+    // Delete selected
     if (isset($_POST['selected_ips'])) {
         foreach ($_POST['selected_ips'] as $ip) {
             unset($blockedIps[$ip]);
         }
     }
 
+    // Save files
     file_put_contents($blockFile, json_encode($blockedIps, JSON_PRETTY_PRINT));
+    file_put_contents($archiveFile, json_encode($archivedIps, JSON_PRETTY_PRINT));
     header("Location: blocked_viewer.php");
     exit;
 }
+
+// --- Filtering ---
+$search = $_GET['search'] ?? '';
+if ($search) {
+    $blockedIps = array_filter($blockedIps, function($info, $ip) use ($search) {
+        return stripos($ip, $search) !== false ||
+               stripos($info['country'], $search) !== false ||
+               stripos($info['state'], $search) !== false;
+    }, ARRAY_FILTER_USE_BOTH);
+}
+
+// --- Sorting ---
+$sort = $_GET['sort'] ?? 'blocked_at';
+$order = $_GET['order'] ?? 'asc';
+usort($blockedIps, function($a, $b) use ($sort, $order) {
+    $valA = $a[$sort] ?? '';
+    $valB = $b[$sort] ?? '';
+    if ($sort === 'expiry' || $sort === 'attempts') {
+        $valA = (int)$valA;
+        $valB = (int)$valB;
+    } else {
+        $valA = strtotime($valA);
+        $valB = strtotime($valB);
+    }
+    return $order === 'asc' ? $valA <=> $valB : $valB <=> $valA;
+});
+
+// --- Pagination ---
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$perPage = 50;
+$total = count($blockedIps);
+$totalPages = ceil($total / $perPage);
+$blockedIps = array_slice($blockedIps, ($page-1)*$perPage, $perPage, true);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -78,48 +84,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="UTF-8">
   <title>Blocked IPs Viewer</title>
   <style>
-    body { font-family: "Segoe UI", Arial, sans-serif; background:#f9f9f9; padding:40px; }
+    body { font-family: Arial, sans-serif; background:#f9f9f9; padding:40px; }
     h1 { color:#cc0000; }
     table { width:100%; border-collapse:collapse; background:#fff; box-shadow:0 0 10px rgba(0,0,0,0.1); }
     th, td { padding:10px; border:1px solid #ddd; }
-    th { background:#cc0000; color:#fff; }
+    th { background:#cc0000; color:#fff; cursor:pointer; }
     tr:nth-child(even){ background:#f2f2f2; }
     .btn { padding:6px 12px; border:none; border-radius:4px; cursor:pointer; font-size:0.9em; }
+    .btn-action { background:#007bff; color:#fff; margin:5px; }
     .btn-delete { background:#dc3545; color:#fff; }
-    .btn-clear { background:#007bff; color:#fff; margin:5px; }
-    .btn:hover { opacity:0.85; }
+    .pagination a { margin:0 5px; text-decoration:none; }
+    .search-bar { margin-bottom:20px; }
   </style>
   <script>
-    function confirmAction(msg) {
-      return confirm(msg);
-    }
+    function confirmAction(msg) { return confirm(msg); }
   </script>
 </head>
 <body>
   <h1>Blocked IPs</h1>
 
-  <?php if (!empty($blockedIps)): ?>
-    <form method="post" onsubmit="return confirmAction('Are you sure? This cannot be undone.')">
-      <button type="submit" name="clear_all" class="btn btn-clear">Clear All</button>
-      <button type="submit" name="clear_expired" class="btn btn-clear">Clear Expired</button>
-      <input type="text" name="clear_country" placeholder="Country code">
-      <button type="submit" class="btn btn-clear">Clear by Country</button>
-      <input type="text" name="clear_state" placeholder="State/Region">
-      <button type="submit" class="btn btn-clear">Clear by State</button>
-      <input type="date" name="clear_before">
-      <button type="submit" class="btn btn-clear">Clear Before Date</button>
+  <form method="get" class="search-bar">
+    <input type="text" name="search" placeholder="Search IP, country, state" value="<?php echo htmlspecialchars($search); ?>">
+    <button type="submit" class="btn btn-action">Search</button>
+  </form>
 
+  <form method="post" onsubmit="return confirmAction('Are you sure?')">
+    <button type="submit" name="archive_expired" class="btn btn-action">Archive Expired</button>
+    <input type="date" name="archive_before">
+    <button type="submit" class="btn btn-action">Archive Before Date</button>
+
+    <?php if (!empty($blockedIps)): ?>
       <table>
         <thead>
           <tr>
             <th>Select</th>
-            <th>IP Address</th>
-            <th>Blocked At</th>
-            <th>Expiry</th>
-            <th>Attempts</th>
-            <th>Country</th>
-            <th>State</th>
-            <th>Action</th>
+            <th><a href="?sort=ip&order=<?php echo $order==='asc'?'desc':'asc'; ?>">IP Address</a></th>
+            <th><a href="?sort=blocked_at&order=<?php echo $order==='asc'?'desc':'asc'; ?>">Blocked At</a></th>
+            <th><a href="?sort=expiry&order=<?php echo $order==='asc'?'desc':'asc'; ?>">Expiry</a></th>
+            <th><a href="?sort=attempts&order=<?php echo $order==='asc'?'desc':'asc'; ?>">Attempts</a></th>
+            <th><a href="?sort=country&order=<?php echo $order==='asc'?'desc':'asc'; ?>">Country</a></th>
+            <th><a href="?sort=state&order=<?php echo $order==='asc'?'desc':'asc'; ?>">State</a></th>
           </tr>
         </thead>
         <tbody>
@@ -132,17 +136,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               <td><?php echo htmlspecialchars($info['attempts']); ?></td>
               <td><?php echo htmlspecialchars($info['country']); ?></td>
               <td><?php echo htmlspecialchars($info['state']); ?></td>
-              <td>
-                <button type="submit" name="delete_ip" value="<?php echo htmlspecialchars($ip); ?>" class="btn btn-delete" onclick="return confirmAction('Delete IP <?php echo $ip; ?>?')">Delete</button>
-              </td>
             </tr>
           <?php endforeach; ?>
         </tbody>
       </table>
-      <button type="submit" class="btn btn-clear" onclick="return confirmAction('Delete selected IPs?')">Delete Selected</button>
-    </form>
-  <?php else: ?>
-    <p>No blocked IPs found.</p>
-  <?php endif; ?>
+      <button type="submit" class="btn btn-delete" onclick="return confirmAction('Delete selected IPs?')">Delete Selected</button>
+    <?php else: ?>
+      <p>No blocked IPs found.</p>
+    <?php endif; ?>
+  </form>
+
+  <div class="pagination">
+    <?php for ($i=1; $i<=$totalPages; $i++): ?>
+      <a href="?page=<?php echo $i; ?>&search=<?php echo urlencode($search); ?>&sort=<?php echo urlencode($sort); ?>&order=<?php echo urlencode($order); ?>">
+        <?php echo $i; ?>
+      </a>
+    <?php endfor; ?>
+  </div>
 </body>
 </html>
