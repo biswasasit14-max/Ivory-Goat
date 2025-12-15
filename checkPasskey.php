@@ -5,14 +5,18 @@ session_start();
 // Define the correct passkey
 $correctPasskey = "OPEN";
 
-// Get the passkey from POST
-$userPasskey = $_POST["passkey"] ?? "";
+// Get and sanitize the passkey from POST
+$userPasskey = isset($_POST["passkey"]) ? trim($_POST["passkey"]) : "";
 
-// Simple check
-if ($userPasskey === $correctPasskey) {
+// Case-insensitive comparison
+if (strcasecmp($userPasskey, $correctPasskey) === 0) {
     $_SESSION['authenticated'] = true;
+    $_SESSION['failed_attempts'] = 0; // optional reset
     echo "success";
+    exit;
 } else {
     echo "fail";
+    exit;
 }
 ?>
+
