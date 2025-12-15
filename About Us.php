@@ -1,10 +1,3 @@
-<?php
-session_start();
-if (!isset($_SESSION['authenticated'])) {
-    header("Location: access-denied.html");
-    exit;
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -155,7 +148,7 @@ if (!isset($_SESSION['authenticated'])) {
     </p>
     <main>
         <!-- Back Button -->
-        <a href="Home.php" class="back-btn">← Back</a>
+        <a href="Index.php" class="back-btn">← Back</a>
 
         <section>
             <h2>About the School</h2>
@@ -213,6 +206,7 @@ if (!isset($_SESSION['authenticated'])) {
     </footer>
 </body>
 </html>
+
 
 
 
