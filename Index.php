@@ -1,10 +1,3 @@
-<?php
-session_start();
-if (!isset($_SESSION['authenticated'])) {
-    header("Location: access-denied.html");
-    exit;
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -171,6 +164,7 @@ if (!isset($_SESSION['authenticated'])) {
     </footer>
 </body>
 </html>
+
 
 
 
