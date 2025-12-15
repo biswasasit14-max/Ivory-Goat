@@ -8,7 +8,11 @@
 
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+  <!-- other head content --> 
+  <?php
+  // Generate version tag from file modification time 
+  $scriptVersion = filemtime(__DIR__ . "/script.js"); 
+  ?>
   <style>
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
@@ -189,7 +193,9 @@
     <p>&copy; 2025 Roupaswa All Rights Reserved.</p>
   </footer>
 
-  <script src="script.js"></script>
+  <!-- Script with dynamic version --> 
+  <script src="script.js?v=<?php echo $scriptVersion; ?>"></script>
   
 </body>
 </html>
+
