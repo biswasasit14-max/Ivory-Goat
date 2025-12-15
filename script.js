@@ -9,7 +9,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function checkPasskey() {
     const key = keyInput.value.trim();
+    if (!key) {
+      statusMessage.textContent = "Please enter a passkey.";
+      return;
+    }
+
     captchaBox.classList.remove("glow-success", "glow-error", "shake");
+    passkeyBtn.disabled = true;
 
     try {
       const res = await fetch("checkPasskey.php", {
@@ -24,16 +30,20 @@ document.addEventListener("DOMContentLoaded", () => {
         captchaBox.classList.add("glow-success");
         statusMessage.textContent = "Passkey accepted!";
         openButton.onclick = () => {
-          window.location.href = "Home.php"; // or wherever you want to go
+          window.location.href = "Home.php";
         };
-      } else {
+      } else if (data === "fail") {
         openButton.disabled = true;
         captchaBox.classList.add("glow-error", "shake");
         statusMessage.textContent = "Wrong passkey!";
         setTimeout(() => captchaBox.classList.remove("shake"), 400);
+      } else {
+        statusMessage.textContent = "Unexpected response: " + data;
       }
     } catch (err) {
       statusMessage.textContent = "Error contacting server.";
+    } finally {
+      passkeyBtn.disabled = false;
     }
   }
 
